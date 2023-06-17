@@ -49,7 +49,7 @@ public function register(Request $request){
     
     $request->validate([
         'name' => "required|min:2",
-        'email' => "required|email|unique:user",
+        'email' => "required|email|unique:users",
         'password' => "required|min:1"
     ]);
 

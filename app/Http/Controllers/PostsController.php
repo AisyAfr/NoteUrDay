@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PostDetailResource;
 use App\Http\Resources\PostsResource;
+use App\Http\Resources\TrashResource;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
     public function __construct(){
-        $this->middleware(['auth:sanctum'])->only('store','update','destroy');
+        $this->middleware(['auth:sanctum'])->only('store','update','destroy','trash');
     }
     /**
      * Display a listing of the resource.
@@ -91,5 +92,12 @@ class PostsController extends Controller
         return response()->json([
             "message" => "Your Post Have Been Deleted"
         ]);
+    }
+
+    public function trash(){
+        dd('halo');
+        $trash_posts = Posts::onlyTrashed()->get();
+
+        return new TrashResource($trash_posts);
     }
 }
