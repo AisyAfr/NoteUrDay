@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class PostsController extends Controller
 {
     public function __construct(){
-        $this->middleware(['auth:sanctum'])->only('store','update','destroy','trash');
+        $this->middleware(['auth:sanctum'])->only('store','update','destroy','trash','permanent','undo');
     }
     /**
      * Display a listing of the resource.
@@ -90,14 +90,29 @@ class PostsController extends Controller
         $post->delete();
 
         return response()->json([
-            "message" => "Your Post Have Been Deleted"
+            "message" => "Your Post Have Been Removed Into Recylce Bin"
         ]);
     }
 
     public function trash(){
-        dd('halo');
         $trash_posts = Posts::onlyTrashed()->get();
 
-        return new TrashResource($trash_posts);
+        return $trash_posts;
+    }
+
+    public function permanent($id){
+        Posts::selectById($id)->forceDelete();
+
+        return response()->json([
+            "message" => "Your Post Has Been Deleted "
+        ]);
+    }
+
+    public function undo($id){
+        Posts::selectById($id)->restore();
+
+        return response()->json([
+            "message" => "Your Post Has Restored Back, Please Check It in Your Posts!"
+        ]);
     }
 }

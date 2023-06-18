@@ -14,4 +14,7 @@ class Posts extends Model
         'title',
         'content'
     ];
+    public function scopeSelectById($query, $id) {
+        return $query -> where('id', $id);
+    }
 }

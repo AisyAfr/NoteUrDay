@@ -17,12 +17,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/posts', [PostsController::class, 'index']);
-Route::get('/posts/{id}', [PostsController::class, 'show']);
 Route::get('/posts/recyclebin', [PostsController::class, 'trash']);
+Route::get('/posts/{id}', [PostsController::class, 'show']);
 Route::post('/posts/create', [PostsController::class, 'store']);
 Route::patch('/posts/edit/{id}', [PostsController::class, 'update']);
+Route::delete('/posts/recyclebin/{id}/permanent', [PostsController::class, 'permanent']);
 Route::delete('/posts/{id}/delete', [PostsController::class, 'destroy']);
-
+Route::post('/posts/{id}/undo', [PostsController::class, 'undo']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
