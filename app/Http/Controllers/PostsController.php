@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 class PostsController extends Controller
 {
     public function __construct(){
-        $this->middleware(['auth:sanctum'])->only('store','update','destroy','trash','permanent','undo');
+        $this->middleware(['auth:sanctum']);
     }
-    /**
+    /**;
      * Display a listing of the resource.
      */
     public function index()
